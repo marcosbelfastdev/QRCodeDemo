@@ -2,6 +2,7 @@ package tests;
 
 import core.utils.QRCodeReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.base.erbium.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Random;
 
@@ -60,14 +63,18 @@ public class QRCodeDemo {
         int attempts = 0;
         while (attempts++ < 5) {
 
-            String randomNumber = String.valueOf(random.nextLong());
+            int length = 30;
+            boolean useLetters = true;
+            boolean useNumbers = true;
+            String randomString = RandomStringUtils.random(length, useLetters, useNumbers);
 
-            browser.find(By.id("content")).setText(randomNumber); // definir texto to QR code
+
+            browser.find(By.id("content")).setText(randomString); // definir texto to QR code
             browser.find(By.id("button")).click();                // clicar em Generate
 
             EElement image = browser.find(By.id("qr-image"));
             image.highlight();                                    // destacar QR Code
-            while (!image.getAttribute("alt").trim().contains(randomNumber)) {
+            while (!image.getAttribute("alt").trim().contains(randomString)) {
 
             }
 
@@ -76,8 +83,8 @@ public class QRCodeDemo {
                             getBufferedImage(image)
                     );
 
-            System.out.println("Informado: " + randomNumber + "\t Obtido: " + returnedQrCodeString);
-            Assert.assertEquals(randomNumber, returnedQrCodeString);
+            System.out.println("Informado: " + randomString + "\t Obtido: " + returnedQrCodeString);
+            Assert.assertEquals(randomString, returnedQrCodeString);
         }
 
     }
