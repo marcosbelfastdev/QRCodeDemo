@@ -45,7 +45,6 @@ public class QRCodeDemo {
         //browser.manage().window().setSize(new Dimension(600,2000));
         browser.manage().deleteAllCookies();
 
-        //browser.setOption(Common.SCROLL_TO_ELEMENTS);
         browser.setOption(Common.HIGHLIGHT_ELEMENTS);
         browser.setOption(Common.HIGHLIGHT_STYLE, "border: 4px solid purple; border-radius: 5px;");
     }
