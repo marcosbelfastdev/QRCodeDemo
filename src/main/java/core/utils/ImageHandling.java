@@ -1,6 +1,5 @@
 package core.utils;
 
-import org.base.erbium.EElement;
 import org.openqa.selenium.WebElement;
 
 import javax.imageio.ImageIO;
