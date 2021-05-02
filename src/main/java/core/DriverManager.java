@@ -14,32 +14,33 @@ public class DriverManager {
     public WebDriver webDriver;
     public EDriver browser;
 
-    public void launchBrowser() {
+    public WebDriver launchBrowser() {
 
         if (webDriver != null)
-            return;
+            return webDriver;
 
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("disable-notifications");
         options.addArguments("--incognito");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
-        options.setExperimentalOption("useAutomationExtension", false);
         webDriver = new ChromeDriver(options);
+        webDriver.manage().window().maximize();
 
-        BaseState baseState = new BaseState();
-        baseState.setProjectName("QRCodeDemo");
-        baseState.setEnvironment("Test");
-        baseState.setTestName("Demo");
-        baseState.setBaseStateUrl("http://loterias.caixa.gov.br/wps/portal/loterias");
-        browser = baseState.execute(webDriver);
-        browser.manage().window().maximize();
-        browser.manage().deleteAllCookies();
+        class Quit extends Thread {
+            @Override
+            public void run() {
+                if (webDriver != null)
+                    webDriver.quit();
+            }
+        }
 
+        Runtime.getRuntime().addShutdownHook(new Quit());
+        return webDriver;
     }
 
-    public EDriver driver() {
-        return browser;
+    public WebDriver driver() {
+        return webDriver;
     }
 
     public void quit() {

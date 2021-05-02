@@ -1,28 +1,27 @@
 package tests;
 
+import core.utils.Attempts;
 import core.utils.QRCodeReader;
+import core.utils.Randoms;
+import core.utils.Timer;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.base.erbium.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Random;
 
-import static core.utils.EElementImage.getBufferedImage;
+import static core.utils.ImageHandling.getBufferedImage;
+import static core.utils.Randoms.getRandomString;
 
-public class QRCodeDemo {
+public class QRCodesDemoErbiumFramework {
 
     public WebDriver webDriver;
     EDriver browser;
@@ -50,43 +49,38 @@ public class QRCodeDemo {
 
         browser.setOption(Common.HIGHLIGHT_ELEMENTS);
         browser.setOption(Common.HIGHLIGHT_STYLE, "border: 4px solid red; border-radius: 5px;");
-        browser.manage().scrollToElements(false);
+        browser.manage().scrollToElements(true);
     }
 
     @Test
-    public void readQRCode() throws IOException {
+    public void generateReadQrCodes() throws IOException {
 
         /*
         Primeiro, vamos gerar um qrcode no site e ler depois
          */
         Random random = new Random();
 
-        int attempts = 0;
-        while (attempts++ < 5) {
+        Attempts attempts = new Attempts(5);
+        while (attempts.hasMoreToGo()) {
 
-            int leftLimit = 97;
-            int rightLimit = 122;
-            int targetStringLength = 20;
-
-            String randomString = random.ints(leftLimit, rightLimit + 1)
-                    .limit(targetStringLength)
-                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                    .toString();
+            String randomString = getRandomString();
 
             browser.find(By.id("content")).setText(randomString); // definir texto to QR code
             browser.find(By.id("button"))
                     .setOption(Common.HIGHLIGHT_ELEMENTS, false).click(); // clicar em Generate
 
             EElement image = browser.find(By.id("qr-image"));
-            image.highlight();                                    // destacar QR Code
-            while (!image.getAttribute("alt").trim().contains(randomString)) {
-
+            Timer time = new Timer(10000);
+            while (!image.highlight().getAttribute("alt").trim().contains(randomString)
+                && !time.timedOut()) {
             }
 
-            String returnedQrCodeString = new QRCodeReader()      // ler QR code
-                    .readQRCode(
-                            getBufferedImage(image)
-                    );
+            String returnedQrCodeString = null;
+            time = new Timer(20000);
+            while (!time.timedOut()) {
+                returnedQrCodeString = new QRCodeReader().readQRCode(getBufferedImage(image));
+                if (returnedQrCodeString!=null) break;
+            }
 
             System.out.println("Informado: " + randomString + "\t Obtido: " + returnedQrCodeString);
             Assert.assertEquals(randomString, returnedQrCodeString);
