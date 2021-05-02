@@ -33,6 +33,7 @@ public class QRCodeDemo {
         options.addArguments("--incognito");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         webDriver = new ChromeDriver(options);
+        webDriver.manage().window().maximize();
 
         BaseState baseState = new BaseState();
         baseState.setProjectName("QRCodeDemo");
@@ -40,11 +41,11 @@ public class QRCodeDemo {
         baseState.setTestName("Demo");
         baseState.setBaseStateUrl("https://www.patrick-wied.at/static/qrgen/");
         browser = baseState.execute(webDriver);
-        browser.manage().window().setPosition(new Point(600,1));
-        browser.manage().window().setSize(new Dimension(600,2000));
+        //browser.manage().window().setPosition(new Point(600,1));
+        //browser.manage().window().setSize(new Dimension(600,2000));
         browser.manage().deleteAllCookies();
 
-        browser.setOption(Common.SCROLL_TO_ELEMENTS);
+        //browser.setOption(Common.SCROLL_TO_ELEMENTS);
         browser.setOption(Common.HIGHLIGHT_ELEMENTS);
         browser.setOption(Common.HIGHLIGHT_STYLE, "border: 4px solid purple; border-radius: 5px;");
     }
@@ -62,16 +63,16 @@ public class QRCodeDemo {
 
             String randomNumber = String.valueOf(random.nextLong());
 
-            browser.find(By.id("content")).setText(randomNumber);
-            browser.find(By.id("button")).click();
+            browser.find(By.id("content")).setText(randomNumber); // definir texto to QR code
+            browser.find(By.id("button")).click();                // clicar em Generate
 
             EElement image = browser.find(By.id("qr-image"));
-            image.highlight();
+            image.highlight();                                    // destacar QR Code
             while (!image.getAttribute("alt").trim().contains(randomNumber)) {
 
             }
 
-            String returnedQrCodeString = new QRCodeReader()
+            String returnedQrCodeString = new QRCodeReader()      // ler QR code
                     .readQRCode(
                             getBufferedImage(image)
                     );
