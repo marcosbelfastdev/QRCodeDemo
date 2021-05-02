@@ -10,11 +10,6 @@ import java.net.URL;
 
 public class ImageHandling {
 
-    public static BufferedImage getBufferedImage(EElement element) throws IOException {
-        element.load();
-        return getBufferedImage(element.getWebElement());
-    }
-
     public static BufferedImage getBufferedImage(WebElement element) throws IOException {
         BufferedImage bufferedImage = null;
         String src = element.getAttribute("src");
