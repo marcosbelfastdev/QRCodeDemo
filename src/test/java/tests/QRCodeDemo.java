@@ -49,7 +49,7 @@ public class QRCodeDemo {
         browser.manage().deleteAllCookies();
 
         browser.setOption(Common.HIGHLIGHT_ELEMENTS);
-        browser.setOption(Common.HIGHLIGHT_STYLE, "border: 4px solid purple; border-radius: 5px;");
+        browser.setOption(Common.HIGHLIGHT_STYLE, "border: 4px solid red; border-radius: 5px;");
     }
 
     @Test
@@ -70,7 +70,8 @@ public class QRCodeDemo {
 
 
             browser.find(By.id("content")).setText(randomString); // definir texto to QR code
-            browser.find(By.id("button")).click();                // clicar em Generate
+            browser.find(By.id("button"))
+                    .setOption(Common.HIGHLIGHT_ELEMENTS, false).click(); // clicar em Generate
 
             EElement image = browser.find(By.id("qr-image"));
             image.highlight();                                    // destacar QR Code
