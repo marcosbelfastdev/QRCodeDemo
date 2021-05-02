@@ -50,6 +50,7 @@ public class QRCodeDemo {
 
         browser.setOption(Common.HIGHLIGHT_ELEMENTS);
         browser.setOption(Common.HIGHLIGHT_STYLE, "border: 4px solid red; border-radius: 5px;");
+        browser.manage().scrollToElements(false);
     }
 
     @Test
@@ -63,11 +64,14 @@ public class QRCodeDemo {
         int attempts = 0;
         while (attempts++ < 5) {
 
-            int length = 30;
-            boolean useLetters = true;
-            boolean useNumbers = true;
-            String randomString = RandomStringUtils.random(length, useLetters, useNumbers);
+            int leftLimit = 97;
+            int rightLimit = 122;
+            int targetStringLength = 20;
 
+            String randomString = random.ints(leftLimit, rightLimit + 1)
+                    .limit(targetStringLength)
+                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                    .toString();
 
             browser.find(By.id("content")).setText(randomString); // definir texto to QR code
             browser.find(By.id("button"))
