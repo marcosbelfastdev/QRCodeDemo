@@ -52,6 +52,11 @@ public class HomePage extends HomePageAttributes {
         while (!time.timedOut()) {
             qrCode = new QRCodeReader().readQRCode(getBufferedImage(qrCodeImage()));
             if (qrCode!=null) break;
+            try {
+                Thread.sleep(50);
+            } catch (Exception e) {
+
+            }
         }
         return qrCode;
     }

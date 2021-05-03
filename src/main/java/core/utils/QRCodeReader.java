@@ -53,6 +53,8 @@ public class QRCodeReader {
             encodedContent = result.getText();
         } catch (NotFoundException e) {
             e.printStackTrace();
+        } catch (NullPointerException npe) {
+
         }
         return encodedContent;
     }

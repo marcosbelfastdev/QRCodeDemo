@@ -23,7 +23,7 @@ public class QRCodesDemoSelenium {
     }
 
     @Test
-    public void generateReadQrCodes() throws IOException {
+    public void generateReadQrCodes() throws IOException, InterruptedException {
         browser.get("https://patrick-wied.at/static/qrgen/");
         HomePage homePage = new HomePage(browser);
 
@@ -35,6 +35,7 @@ public class QRCodesDemoSelenium {
                     .generateQrCode()
                     .waitQrCodeReady(randomString)
                     .readQrCode();
+            Thread.sleep(200);
             System.out.println("Informado: " + randomString + "\t Obtido: " + returnedQrCodeString);
             Assert.assertEquals(randomString, returnedQrCodeString);
         }
