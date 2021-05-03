@@ -1,8 +1,6 @@
 package core;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.base.erbium.BaseState;
-import org.base.erbium.EDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,7 +10,6 @@ import java.util.Collections;
 public class DriverManager {
 
     public WebDriver webDriver;
-    public EDriver browser;
 
     public WebDriver launchBrowser() {
 
@@ -30,8 +27,11 @@ public class DriverManager {
         class Quit extends Thread {
             @Override
             public void run() {
-                if (webDriver != null)
+                try {
                     webDriver.quit();
+                } catch (Exception ignore) {
+
+                }
             }
         }
 
