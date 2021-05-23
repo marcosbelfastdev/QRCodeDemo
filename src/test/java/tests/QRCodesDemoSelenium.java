@@ -19,11 +19,12 @@ public class QRCodesDemoSelenium {
     @Before
     public void setup() {
         driverManager = new DriverManager();
-        browser = driverManager.launchBrowser();
+
     }
 
     @Test
     public void generateReadQrCodes() throws IOException, InterruptedException {
+        browser = driverManager.launchBrowser();
         browser.get("https://patrick-wied.at/static/qrgen/");
         HomePage homePage = new HomePage(browser);
 
