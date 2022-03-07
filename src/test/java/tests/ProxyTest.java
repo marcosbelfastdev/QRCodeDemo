@@ -1,19 +1,14 @@
 package tests;
 
 import core.DriverManager;
-import core.utils.Attempts;
-import core.utils.Randoms;
-import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
-import sites.qrgen.selenium.pages.HomePage;
+import org.openqa.selenium.remote.BrowserType;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class ProxyTest {
@@ -42,7 +37,7 @@ public class ProxyTest {
         client.setProxyType(Proxy.ProxyType.MANUAL);
         client.setHttpProxy("127.0.0.1:" + PROXY_PORT);
 
-        browser = driverManager.launchBrowser(client);
+        browser = driverManager.launchBrowser(BrowserType.CHROME);
 
         // Navigate normally
         browser.navigate().to("http://www.bbc.co.uk/");

@@ -3,13 +3,15 @@ package tests;
 import core.DriverManager;
 import core.utils.Attempts;
 import core.utils.Randoms;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.BrowserType;
 import sites.qrgen.selenium.pages.HomePage;
 
 import java.io.IOException;
-
-import static core.utils.ImageHandling.getBufferedImage;
 
 public class QRCodesDemoSelenium {
 
@@ -24,7 +26,8 @@ public class QRCodesDemoSelenium {
 
     @Test
     public void generateReadQrCodes() throws IOException, InterruptedException {
-        browser = driverManager.launchBrowser();
+        browser = driverManager.launchBrowser(BrowserType.FIREFOX);
+        browser.get("about:blank");
         browser.get("https://patrick-wied.at/static/qrgen/");
         HomePage homePage = new HomePage(browser);
 
