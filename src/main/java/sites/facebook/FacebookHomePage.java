@@ -1,8 +1,6 @@
 package sites.facebook;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class FacebookHomePage extends FacebookHomePageAttributes {
 
@@ -10,12 +8,14 @@ public class FacebookHomePage extends FacebookHomePageAttributes {
         super(driver);
     }
 
-    public void navegar(String url) {
+    public FacebookHomePage navegar(String url) {
         $driver.get(url);
+        return this;
     }
 
-    protected WebElement createNewAccountButton() {
-        return elementFactory.getInteractableWebElement(By.xpath("//*[contains(.,'Create new account')]"));
+    public FacebookHomePage signUp() {
+        createNewAccountButton().click();
+        return this;
     }
 
 }

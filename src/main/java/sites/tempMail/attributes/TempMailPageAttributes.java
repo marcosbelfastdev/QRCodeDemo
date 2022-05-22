@@ -23,5 +23,20 @@ public class TempMailPageAttributes {
         return elementFactory.getInteractableWebElement(By.xpath("//*[contains(.,'Your inbox is empty')]"));
     }
 
+    public WebElement inboxDataList() {
+        return elementFactory.getInteractableWebElement(By.xpath("//inbox-dataList"));
+    }
+
+    public WebElement latestEmailItem() {
+        return inboxDataList().findElements(By.tagName("li")).get(0);
+    }
+
+    public WebElement openEmailLink() {
+        return latestEmailItem().findElement(By.xpath("//href"));
+    }
+
+    public WebElement emailMessageContents() {
+        return elementFactory.getWebElement(By.xpath("//div[@class='inbox-data-content-intro']"));
+    }
 
 }

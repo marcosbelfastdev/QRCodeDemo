@@ -59,7 +59,10 @@ public class FacebookSignupPage extends FacebookSignupPageAttributes {
         return this;
     }
 
-
+    public FacebookSignupPage signUp() {
+        signUpButton().click();
+        return this;
+    }
 
 
 
