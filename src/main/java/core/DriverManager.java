@@ -49,6 +49,7 @@ public class DriverManager {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("disable-notifications");
         options.addArguments("--incognito");
+        options.addArguments("--ignore-certificate-errors");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         webDriver = new ChromeDriver(options);
         webDriver.manage().window().maximize();

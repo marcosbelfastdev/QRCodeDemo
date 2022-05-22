@@ -11,4 +11,12 @@ public class Timer {
         return $endTime - System.currentTimeMillis() < 0;
     }
 
+    public void sleep(int sleep) {
+        try {
+            Thread.sleep(sleep);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
