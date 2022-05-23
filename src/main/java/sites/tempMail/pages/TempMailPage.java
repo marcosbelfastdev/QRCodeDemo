@@ -6,6 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import sites.tempMail.attributes.TempMailPageAttributes;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -20,13 +24,13 @@ public class TempMailPage extends TempMailPageAttributes {
         $driver.get(url);
     }
 
-    public String getDisposableEmail() {
-        Timer timer = new Timer(30*1000);
-        while (!emailField().getText().contains("@")) {
-            timer.sleep(1000);
-        }
+    public String getDisposableEmail() throws IOException, UnsupportedFlavorException {
 
-        return emailField().getText();
+        // Copy email to clipboard
+        new Timer(1000).sleep(4000);
+        copyClipboardButton().click();
+        String email = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); // extracting the text that was copied to the clipboard
+        return email;
     }
 
     public TempMailPage waitforAnyMessages() {

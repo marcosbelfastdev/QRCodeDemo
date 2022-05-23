@@ -12,6 +12,8 @@ import sites.tempMail.contants.Config;
 import sites.tempMail.pages.TempMailPage;
 
 import javax.mail.MessagingException;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Bot {
@@ -25,16 +27,16 @@ public class Bot {
 
     @Before
     public void setup() {
-        facebook = facebookDriverManager.launchFirefox();
+        facebook = facebookDriverManager.launchChrome();
         email = emailDriverManager.launchChrome();
     }
 
     @Test
-    public void doBotStuff() throws MessagingException {
+    public void doBotStuff() throws MessagingException, IOException, UnsupportedFlavorException {
         createFacebookAccount();
     }
 
-    public void createFacebookAccount() {
+    public void createFacebookAccount() throws IOException, UnsupportedFlavorException {
 
         LocalDate dateofBirth = sites.facebook.Config.DATE_OF_BIRTH;
         String email = createDisposableEmail();
@@ -44,7 +46,8 @@ public class Bot {
                         .signUp();
 
         FacebookSignupPage facebookSignupPage = new FacebookSignupPage(facebook);
-        facebookSignupPage.enterFirstName(NamesGenerator.getRandomMaleFirstName())
+        facebookSignupPage
+                .enterFirstName(NamesGenerator.getRandomMaleFirstName())
                 .enterLastName(NamesGenerator.getRandomLastName())
                 .enterEmail(email)
                 .reenterEmail(email)
@@ -58,7 +61,7 @@ public class Bot {
         // confirmar otp
     }
 
-    private String createDisposableEmail() {
+    private String createDisposableEmail() throws IOException, UnsupportedFlavorException {
         TempMailPage tempMailPage = new TempMailPage(email);
         tempMailPage.navegar(Config.HOME_URL);
         this.disposableEmail = tempMailPage.getDisposableEmail();

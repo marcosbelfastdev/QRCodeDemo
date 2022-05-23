@@ -16,7 +16,7 @@ public class FacebookHomePageAttributes {
     }
 
     protected WebElement createNewAccountButton() {
-        return elementFactory.getInteractableWebElement(By.xpath("//*[contains(.,'Create new account')]"));
+        return elementFactory.getWebElement(By.xpath("//a[@data-testid='open-registration-form-button']"));
     }
 
 

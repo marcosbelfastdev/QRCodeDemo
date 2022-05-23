@@ -42,12 +42,12 @@ public class FacebookSignupPageAttributes {
     }
 
     protected Select daySelector() {
-        WebElement selectElement = elementFactory.getWebElement(By.id("month"));
+        WebElement selectElement = elementFactory.getWebElement(By.id("day"));
         return new Select(selectElement);
     }
 
     protected Select yearSelector() {
-        WebElement selectElement = elementFactory.getWebElement(By.id("month"));
+        WebElement selectElement = elementFactory.getWebElement(By.id("year"));
         return new Select(selectElement);
     }
 
@@ -58,7 +58,7 @@ public class FacebookSignupPageAttributes {
     }
 
     protected WebElement signUpButton() {
-        return elementFactory.getInteractableWebElement(By.name("websubmit"));
+        return elementFactory.getWebElement(By.xpath("//button[@type='submit']"));
     }
 
 

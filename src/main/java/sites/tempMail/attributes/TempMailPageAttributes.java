@@ -16,11 +16,15 @@ public class TempMailPageAttributes {
     }
 
     public WebElement emailField() {
-        return elementFactory.getInteractableWebElement(By.id("email"));
+        return elementFactory.getWebElement(By.id("mail"));
+    }
+
+    public WebElement copyClipboardButton() {
+        return elementFactory.getInteractableWebElement(By.id("click-to-copy"));
     }
 
     public WebElement yourInboxIsEmpty() {
-        return elementFactory.getInteractableWebElement(By.xpath("//*[contains(.,'Your inbox is empty')]"));
+        return elementFactory.getWebElement(By.xpath("//*[contains(.,'Your inbox is empty')]"));
     }
 
     public WebElement inboxDataList() {

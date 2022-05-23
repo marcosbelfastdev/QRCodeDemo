@@ -30,7 +30,7 @@ public class NamesGenerator {
             if (currentText.trim().equalsIgnoreCase("\t") || currentText.trim().equalsIgnoreCase("\n"))
                 bigTextListSanitized.remove(currentText);
         }
-        bigTextList.clear();
+        bigTextList = null;
 
         // Select a random word
         int min = 0;

@@ -3,6 +3,8 @@ package sites.facebook;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class FacebookSignupPage extends FacebookSignupPageAttributes {
 
@@ -40,17 +42,17 @@ public class FacebookSignupPage extends FacebookSignupPageAttributes {
     }
 
     public FacebookSignupPage selectMonthOfBirth(LocalDate dateOfBirth) {
-        monthSelector().selectByVisibleText(dateOfBirth.getMonth().name());
+        monthSelector().selectByVisibleText(dateOfBirth.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
         return this;
     }
 
     public FacebookSignupPage selectDayOfBirth(LocalDate dateOfBirth) {
-        monthSelector().selectByVisibleText(String.valueOf(dateOfBirth.getDayOfMonth()).trim());
+        daySelector().selectByVisibleText(String.valueOf(dateOfBirth.getDayOfMonth()).trim());
         return this;
     }
 
     public FacebookSignupPage selectYearOfBirth(LocalDate dateOfBirth) {
-        monthSelector().selectByVisibleText(String.valueOf(dateOfBirth.getYear()).trim());
+        yearSelector().selectByVisibleText(String.valueOf(dateOfBirth.getYear()).trim());
         return this;
     }
 
@@ -60,7 +62,7 @@ public class FacebookSignupPage extends FacebookSignupPageAttributes {
     }
 
     public FacebookSignupPage signUp() {
-        signUpButton().click();
+        signUpButton().submit();
         return this;
     }
 
