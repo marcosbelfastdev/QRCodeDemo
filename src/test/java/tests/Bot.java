@@ -45,20 +45,27 @@ public class Bot {
         facebookHomePage.navegar(sites.facebook.Config.HOME_URL)
                         .signUp();
 
+        String firstName = NamesGenerator.getRandomMaleFirstName();
+        String lastName = NamesGenerator.getRandomLastName() + " " + NamesGenerator.getRandomLastName();
+        String password = sites.facebook.Config.FIXED_PASSWORD;
+        int gender = sites.facebook.Config.MALE;
+
         FacebookSignupPage facebookSignupPage = new FacebookSignupPage(facebook);
         facebookSignupPage
-                .enterFirstName(NamesGenerator.getRandomMaleFirstName())
-                .enterLastName(NamesGenerator.getRandomLastName())
+                .enterFirstName(firstName)
+                .enterLastName(lastName)
                 .enterEmail(email)
                 .reenterEmail(email)
-                .enterPassword(sites.facebook.Config.FIXED_PASSWORD)
+                .enterPassword(password)
                 .selectMonthOfBirth(dateofBirth)
                 .selectDayOfBirth(dateofBirth)
                 .selectYearOfBirth(dateofBirth)
-                .selectGender(sites.facebook.Config.MALE)
-                .signUp();
+                .selectGender(gender);
+        System.out.println(firstName + "," + lastName + ",[" + password + "]," + gender + "," + email + "," + dateofBirth);
+        facebookSignupPage.signUp();
 
-        // confirmar otp
+        // Confirm otp
+        System.out.println("Confirm OTP");
     }
 
     private String createDisposableEmail() throws IOException, UnsupportedFlavorException {
